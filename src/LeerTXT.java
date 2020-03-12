@@ -1,3 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+//Importacion de los paquetes necesarios. 
+import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -7,11 +14,16 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-public class ArchivoTXT {
-	
-	/**
-	 * Funcion para obtener la ruta de el archivo txt
+/**
+ *
+ * @author Alfredo Quezada
+ * @author Estefania Barrio
+ */
+public class LeerTXT {
+    /**
+	 * Como no sabemos donde tendra guardado el archivo el tester, 
+         * usamos un metodo que permitira escoger desde donde el lo quiera
+         * asi nos evitamos problemas :). 
 	 * @return
 	 */
 	public static String getPath()  {
@@ -24,8 +36,7 @@ public class ArchivoTXT {
 		try {
 			f = new File(new File(".").getCanonicalPath());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+                    // TODO Auto-generated catch block
 		}
 		
 		String path = "";
@@ -36,7 +47,7 @@ public class ArchivoTXT {
 			chooser.showOpenDialog(null);
 	    
 			path = chooser.getSelectedFile().toString();
-		}catch(Exception e) {
+		}catch(HeadlessException e) {
 			
 		}
 	    return path;
@@ -45,7 +56,7 @@ public class ArchivoTXT {
 	
 	
 	/**
-	 * Funcion para leer el txt
+	 * Esta es la funcion para leer los datos del txt.
 	 * @return
 	 */
 	public static ArrayList<String> leerTXT(String path) {
@@ -53,7 +64,7 @@ public class ArchivoTXT {
 		File archivo = new File(path);
 		FileReader fr;
 		BufferedReader br;
-		ArrayList<String> lineas = new ArrayList<String>();
+		ArrayList<String> Datos = new ArrayList<>();
 		
 		try {
 			
@@ -64,7 +75,7 @@ public class ArchivoTXT {
 			String linea = "";
 			
 			while((linea = br.readLine()) != null) {
-				lineas.add(linea);
+				Datos.add(linea);
 				
 			}
 			
@@ -73,11 +84,17 @@ public class ArchivoTXT {
 			fr.close();
 			
 			
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ha sucedido un error leyendo el archivo " + e);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado leyendo su archivo.  " + e);
 		}
 		
-		return lineas;
+		return Datos;
 	}
 
 }
+
+/**
+ * Links de referencia:
+ * https://netbeans.org/kb/docs/java/gui-filechooser.html
+ * https://www.youtube.com/watch?v=nVWXJ3qqi0o
+ */
